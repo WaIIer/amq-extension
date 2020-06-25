@@ -3,6 +3,7 @@
 
 * About  
 Chrome extension to track stats in [[animemusicquiz.com][AMQ]].
+
 [[./screenshots/1.png]]
 
 * Installation
@@ -12,9 +13,11 @@ Chrome extension to track stats in [[animemusicquiz.com][AMQ]].
 #+END_SRC
 + In Chrome:
   - Enter =chrome://extensions= in the URL bar
-  - Enable Developer Mode: [[./screenshots/developermode.png]]
+  - Enable Developer Mode: 
+[[./screenshots/developermode.png]]
   - Load Unpacked
-  - Select amq-extension folder [[./screenshots/installed.png]]
+  - Select amq-extension folder 
+[[./screenshots/installed.png]]
 
 * Use
 + After an answer is shown, click on the amq-extension icon to see your stats on the song
@@ -36,7 +39,7 @@ Chrome extension to track stats in [[animemusicquiz.com][AMQ]].
 + [ ] Remove prints
 
 * License
-[[./LICENSE]]
+[[./LICENSE][MIT]]
 
 * Footnotes
 This is not affiliated with AMQ or Anilist in any way.
