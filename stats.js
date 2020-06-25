@@ -1,5 +1,3 @@
-console.log("Hi amq");
-
 function getSelfName() {
     let selfUserDivs = document.getElementsByClassName("qpsPlayerName self");
     if (selfUserDivs.length < 1) {
@@ -154,7 +152,6 @@ try {
             };
 
             updateStorage(amqRound);
-            // console.log(amqRound);
         }
     }
 

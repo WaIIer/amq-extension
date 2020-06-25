@@ -79,7 +79,6 @@ chrome.storage.sync.get("lastRound", function (result: AmqResult) {
 
     var songKey = round.songTitle + round.songArtist;
     chrome.storage.sync.get("session", function (result: AmqSession) {
-        console.log(result);
         if (result && result.session && result.session[songKey]) {
             sessionRecordDiv.textContent = `${result.session[songKey].correct.toString()}/${result.session[songKey].occurrences.toString()}`
         }
@@ -145,7 +144,6 @@ function getInfoFromAnilist(animeName: string) {
         }).then(function (result) {
             anilistResult = result;
             handleAnilistResult(result);
-            console.log(result);
         }).catch(function (error) {
             anilistResponse = error;
             console.log("Error from Anilist");
@@ -163,7 +161,6 @@ function handleAnilistResult(anilistResult: AnilistApiResult) {
 
 newSessionButton.onclick = function () {
     chrome.storage.sync.set({ ["session"]: {} }, function () {
-        console.log("Session reset");
     });
     sessionRecordDiv.textContent = "0/0";
 }

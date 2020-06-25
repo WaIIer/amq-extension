@@ -65,7 +65,6 @@ chrome.storage.sync.get("lastRound", function (result) {
     percentWrongDiv.textContent = (100 - percentCorrect).toFixed(2) + "%";
     var songKey = round.songTitle + round.songArtist;
     chrome.storage.sync.get("session", function (result) {
-        console.log(result);
         if (result && result.session && result.session[songKey]) {
             sessionRecordDiv.textContent = result.session[songKey].correct.toString() + "/" + result.session[songKey].occurrences.toString();
         }
@@ -116,7 +115,6 @@ function getInfoFromAnilist(animeName) {
     }).then(function (result) {
         anilistResult = result;
         handleAnilistResult(result);
-        console.log(result);
     })["catch"](function (error) {
         anilistResponse = error;
         console.log("Error from Anilist");
@@ -133,7 +131,6 @@ function handleAnilistResult(anilistResult) {
 newSessionButton.onclick = function () {
     var _a;
     chrome.storage.sync.set((_a = {}, _a["session"] = {}, _a), function () {
-        console.log("Session reset");
     });
     sessionRecordDiv.textContent = "0/0";
 };
