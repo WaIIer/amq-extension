@@ -4,7 +4,6 @@
 * About  
 Chrome extension to track stats in [[animemusicquiz.com][AMQ]].
 
-#+ATTR_HTML: :style margin-left: auto; margin-right: auto;
 [[./screenshots/1.png]]
 
 * Installation
@@ -15,11 +14,9 @@ Chrome extension to track stats in [[animemusicquiz.com][AMQ]].
 + In Chrome:
   - Enter =chrome://extensions= in the URL bar
   - Enable Developer Mode: 
-#+ATTR_HTML: :style margin-left: auto; margin-right: auto;
 [[./screenshots/developermode.png]]
   - Load Unpacked
   - Select amq-extension folder 
-#+ATTR_HTML: :style margin-left: auto; margin-right: auto;
 [[./screenshots/installed.png]]
 
 * Use
