@@ -1,4 +1,3 @@
-console.log("Hi AMQ");
 function _getSelfName() {
     var selfUserDivs = document.getElementsByClassName("qpsPlayerName self");
     if (selfUserDivs && selfUserDivs.length > 0) {

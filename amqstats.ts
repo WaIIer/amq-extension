@@ -1,5 +1,3 @@
-console.log("Hi AMQ");
-
 function _getSelfName(): string {
     let selfUserDivs: HTMLCollection = document.getElementsByClassName("qpsPlayerName self");
 

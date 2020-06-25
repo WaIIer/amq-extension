@@ -58,9 +58,7 @@ function updateStorage(amqRound) {
     let songKey = amqRound.title + amqRound.artist;
     let pushedData = {};
 
-    let currentStoredValue = chrome.storage.sync.get(songKey, function (result) {
-        console.log(result);
-
+    chrome.storage.sync.get(songKey, function (result) {
         if (result[songKey]) {
             pushedData = result[songKey];
             pushedData.timesAsked += 1;
@@ -85,7 +83,6 @@ function updateStorage(amqRound) {
         pushedData[amqRound.answer] = amqRound.songType;
 
         chrome.storage.sync.set({ [songKey]: pushedData }, function () {
-            console.log(pushedData);
         });
 
         chrome.storage.sync.set({ lastRound: pushedData }, function () {
@@ -116,10 +113,7 @@ function updateCurrentSession(songKey, isCorrect) {
             };
         }
 
-        console.log(session);
-
         chrome.storage.sync.set({ "session": session }, function () {
-            console.log(session);
             lastSession = session;
         });
     });
