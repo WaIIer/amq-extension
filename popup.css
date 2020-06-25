@@ -1,0 +1,12 @@
+.row {
+    margin-top: 10px !important;
+    background-color: rgb(66,66,66);
+    color: white;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+body {
+    background-image: url("background.png");
+}

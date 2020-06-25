@@ -1,0 +1,29 @@
+{
+    "name": "AMQ Stats",
+    "version": "1.0",
+    "description": "Tracks stats to say you are bad at AMQ",
+    "manifest_version": 2,
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.animemusicquiz.com/*"
+            ],
+            "js": [
+                "stats.js",
+                "popup.js"
+            ]
+        }
+    ],
+    "background": {
+        "scripts": [
+            "background.js"
+        ],
+        "persistent": true
+    },
+    "browser_action": {},
+    "permissions": [
+        "storage",
+        "tabs",
+        "*://*.animemusicquiz.com/*"
+    ]
+}

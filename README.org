@@ -1,0 +1,42 @@
+#+TITLE: README
+#+AUTHOR: Brandon Waller
+
+* About  
+Chrome extension to track stats in [[animemusicquiz.com][AMQ]].
+[[./screenshots/1.png]]
+
+* Installation
++ Download
+#+BEGIN_SRC sh
+  git clone https://github.com/Bwall72/amq-extension.git
+#+END_SRC
++ In Chrome:
+  - Enter =chrome://extensions= in the URL bar
+  - Enable Developer Mode: [[./screenshots/developermode.png]]
+  - Load Unpacked
+  - Select amq-extension folder [[./screenshots/installed.png]]
+
+* Use
++ After an answer is shown, click on the amq-extension icon to see your stats on the song
++ Press the =New Session= button to start a new tracked session
+
+* TODO
+** Porting [0/2]
++ [ ] Port to Firefox
++ [ ] Test on new Edge 
+** Features [0/5]
++ [ ] View past sessions
++ [ ] Create study list
++ [ ] Add answer to your PTW
++ [ ] Create extension icon
++ [ ] Change icon color based on song stats
++ [ ] MAL integration
+** Code
++ [ ] Convert =stats.js= to TypeScript
++ [ ] Remove prints
+
+* License
+[[./LICENSE]]
+
+* Footnotes
+This is not affiliated with AMQ or Anilist in any way.
