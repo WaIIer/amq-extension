@@ -27,6 +27,12 @@ function getGuess(qpAvatarContainer) {
 }
 
 function getResult(qpAvatarContainer) {
+    if (!qpAvatarContainer) {
+        return {
+            result: "N/A",
+            guess: "..."
+        };
+    }
     let qpAvatarAnswerContainers = qpAvatarContainer.getElementsByClassName("qpAvatarAnswerContainer");
     if (!qpAvatarAnswerContainers || qpAvatarAnswerContainers.length < 1) {
         return {
@@ -85,36 +91,34 @@ function updateStorage(amqRound) {
         chrome.storage.sync.set({ [songKey]: pushedData }, function () {
         });
 
-        chrome.storage.sync.set({ lastRound: pushedData }, function () {
-
+        chrome.storage.sync.set({ "lastRound": pushedData }, function () {
         });
 
         updateCurrentSession(songKey, amqRound.result);
     });
 }
 
-var lastSession = {};
-
 function updateCurrentSession(songKey, isCorrect) {
     chrome.storage.sync.get("session", function (result) {
-        console.log(result);
-
-        let session = result.session;
-
-        if (songKey in session) {
+        if (result && result.session && (songKey in result.session)) {
             if (isCorrect == "CORRECT") {
-                session[songKey].correct += 1;
+                result.session[songKey].correct += 1;
             }
-            session[songKey].occurrences += 1;
+            if (isCorrect != "N/A") {
+                result.session[songKey].occurrences += 1;
+            }
         } else {
-            session[songKey] = {
+            if (!("session" in result)) {
+                result = { "session": {} };
+            }
+
+            result["session"][songKey] = {
                 correct: (isCorrect == "CORRECT") ? 1 : 0,
-                occurrences: 1
+                occurrences: (isCorrect != "N/A") ? 1 : 0
             };
         }
 
-        chrome.storage.sync.set({ "session": session }, function () {
-            lastSession = session;
+        chrome.storage.sync.set({ "session": result.session }, function () {
         });
     });
 }
@@ -144,6 +148,8 @@ try {
                 result: result.result,
                 guess: result.guess,
             };
+
+            console.log(amqRound);
 
             updateStorage(amqRound);
         }

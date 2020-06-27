@@ -68,6 +68,9 @@ chrome.storage.sync.get("lastRound", function (result) {
         if (result && result.session && result.session[songKey]) {
             sessionRecordDiv.textContent = result.session[songKey].correct.toString() + "/" + result.session[songKey].occurrences.toString();
         }
+        else {
+            sessionRecordDiv.textContent = "0/0";
+        }
     });
     getInfoFromAnilist(animeDiv.textContent);
 });
@@ -123,8 +126,8 @@ function getInfoFromAnilist(animeName) {
 }
 function handleAnilistResult(anilistResult) {
     var media = anilistResult.data.Media;
-    animeYearDiv.textContent = media.season + " " + media.seasonYear;
-    animeScoreDiv.textContent = media.averageScore + "/100";
+    animeYearDiv.textContent = media.season.toString() + " " + media.seasonYear.toString();
+    animeScoreDiv.textContent = media.averageScore.toString() + "/100";
     animeMembersDiv.textContent = media.popularity.toString();
     animeEpisodesDiv.textContent = media.episodes.toString();
 }
