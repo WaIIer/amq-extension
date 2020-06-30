@@ -92,6 +92,8 @@ function updateStorage(amqRound) {
         });
 
         chrome.storage.sync.set({ "lastRound": pushedData }, function () {
+            console.log("last round");
+            console.log(pushedData);
         });
 
         updateCurrentSession(songKey, amqRound.result);
