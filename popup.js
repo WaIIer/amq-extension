@@ -35,8 +35,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 var chrome = window["chrome"];
-var lr = {};
+var lr = undefined;
 window.onload = function () {
+    getLastRound();
+};
+function getLastRound() {
     var animeDiv = document.getElementById("anime-name-div");
     var songNameDiv = document.getElementById("song-name-div");
     var artistDiv = document.getElementById("song-artist-div");
@@ -46,7 +49,8 @@ window.onload = function () {
     var percentWrongDiv = document.getElementById("percent-wrong-div");
     var sessionRecordDiv = document.getElementById("session-record-div");
     var newSessionButton = document.getElementById("new-session-button");
-    chrome.storage.sync.get("lastRound", function (result) {
+    chrome.storage.local.get("lastRound", function (result) {
+        console.log(result.lastRound);
         var round = result.lastRound;
         lr = result;
         animeDiv.textContent = round.animeTitle;
@@ -59,7 +63,7 @@ window.onload = function () {
         percentCorrectDiv.textContent = percentCorrect.toFixed(2) + "%";
         percentWrongDiv.textContent = (100 - percentCorrect).toFixed(2) + "%";
         var songKey = round.songTitle + round.songArtist;
-        chrome.storage.sync.get("session", function (result) {
+        chrome.storage.local.get("session", function (result) {
             if (result && result.session && result.session[songKey]) {
                 sessionRecordDiv.textContent = result.session[songKey].correct.toString() + "/" + result.session[songKey].occurrences.toString();
             }
@@ -71,11 +75,12 @@ window.onload = function () {
     });
     newSessionButton.onclick = function () {
         var _a;
-        chrome.storage.sync.set((_a = {}, _a["session"] = {}, _a), function () {
+        chrome.storage.local.set((_a = {}, _a["session"] = {}, _a), function () {
         });
         sessionRecordDiv.textContent = "0/0";
     };
-};
+    return lr;
+}
 var animeExceptions = {
     "TIGER X DRAGON": "TORADORA"
 };

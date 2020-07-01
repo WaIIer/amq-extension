@@ -64,7 +64,7 @@ function updateStorage(amqRound) {
     let songKey = amqRound.title + amqRound.artist;
     let pushedData = {};
 
-    chrome.storage.sync.get(songKey, function (result) {
+    chrome.storage.local.get(songKey, function (result) {
         if (result[songKey]) {
             pushedData = result[songKey];
             pushedData.timesAsked += 1;
@@ -88,10 +88,10 @@ function updateStorage(amqRound) {
 
         pushedData[amqRound.answer] = amqRound.songType;
 
-        chrome.storage.sync.set({ [songKey]: pushedData }, function () {
+        chrome.storage.local.set({ [songKey]: pushedData }, function () {
         });
 
-        chrome.storage.sync.set({ "lastRound": pushedData }, function () {
+        chrome.storage.local.set({ "lastRound": pushedData }, function () {
             console.log("last round");
             console.log(pushedData);
         });
@@ -101,7 +101,7 @@ function updateStorage(amqRound) {
 }
 
 function updateCurrentSession(songKey, isCorrect) {
-    chrome.storage.sync.get("session", function (result) {
+    chrome.storage.local.get("session", function (result) {
         if (result && result.session && (songKey in result.session)) {
             if (isCorrect == "CORRECT") {
                 result.session[songKey].correct += 1;
@@ -120,7 +120,7 @@ function updateCurrentSession(songKey, isCorrect) {
             };
         }
 
-        chrome.storage.sync.set({ "session": result.session }, function () {
+        chrome.storage.local.set({ "session": result.session }, function () {
         });
     });
 }

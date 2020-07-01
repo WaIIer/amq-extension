@@ -43,9 +43,13 @@ interface AmqRound {
 }
 
 var chrome = window["chrome"];
-var lr = {};
+var lr: AmqResult = undefined;
 
 window.onload = () => {
+    getLastRound();
+};
+
+function getLastRound(): AmqResult {
     var animeDiv: HTMLElement = document.getElementById("anime-name-div");
     var songNameDiv: HTMLElement = document.getElementById("song-name-div");
     var artistDiv: HTMLElement = document.getElementById("song-artist-div");
@@ -55,7 +59,8 @@ window.onload = () => {
     var percentWrongDiv: HTMLElement = document.getElementById("percent-wrong-div");
     var sessionRecordDiv: HTMLElement = document.getElementById("session-record-div");
     var newSessionButton: HTMLElement = document.getElementById("new-session-button");
-    chrome.storage.sync.get("lastRound", function (result: AmqResult) {
+    chrome.storage.local.get("lastRound", function (result: AmqResult) {
+        console.log(result.lastRound);
         var round = result.lastRound;
         lr = result;
 
@@ -71,22 +76,24 @@ window.onload = () => {
         percentWrongDiv.textContent = `${(100 - percentCorrect).toFixed(2)}%`
 
         var songKey = round.songTitle + round.songArtist;
-        chrome.storage.sync.get("session", function (result: AmqSession) {
+        chrome.storage.local.get("session", function (result: AmqSession) {
             if (result && result.session && result.session[songKey]) {
-                sessionRecordDiv.textContent = `${result.session[songKey].correct.toString()}/${result.session[songKey].occurrences.toString()}`
+                sessionRecordDiv.textContent = `${result.session[songKey].correct.toString()}/${result.session[songKey].occurrences.toString()}`;
             } else {
-                sessionRecordDiv.textContent = "0/0"
+                sessionRecordDiv.textContent = "0/0";
             }
         })
 
         getInfoFromAnilist(animeDiv.textContent);
     });
     newSessionButton.onclick = function () {
-        chrome.storage.sync.set({ ["session"]: {} }, function () {
+        chrome.storage.local.set({ ["session"]: {} }, function () {
         });
         sessionRecordDiv.textContent = "0/0";
     }
-};
+
+    return lr;
+}
 
 var animeExceptions = {
     "TIGER X DRAGON": "TORADORA"
