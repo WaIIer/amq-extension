@@ -24,6 +24,7 @@
     "permissions": [
         "storage",
         "tabs",
-        "*://*.animemusicquiz.com/*"
+        "*://*.animemusicquiz.com/*",
+        "downloads"
     ]
 }

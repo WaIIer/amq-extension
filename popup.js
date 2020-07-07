@@ -38,6 +38,8 @@ var chrome = window["chrome"];
 var lr = undefined;
 window.onload = function () {
     getLastRound();
+    var downloadDataButton = document.getElementById("download-data-button");
+    downloadDataButton.onclick = downloadData;
 };
 function getLastRound() {
     var animeDiv = document.getElementById("anime-name-div");
@@ -141,4 +143,14 @@ function handleAnilistResult(anilistResult) {
     animeScoreDiv.textContent = media.averageScore.toString() + "/100";
     animeMembersDiv.textContent = media.popularity.toString();
     animeEpisodesDiv.textContent = media.episodes.toString();
+}
+function downloadData() {
+    chrome.storage.local.get(null, function (items) {
+        var blob = new Blob([JSON.stringify(items)], { type: "application/json" });
+        var url = URL.createObjectURL(blob);
+        chrome.downloads.download({
+            url: url
+        });
+    });
+    "s";
 }

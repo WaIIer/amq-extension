@@ -47,6 +47,8 @@ var lr: AmqResult = undefined;
 
 window.onload = () => {
     getLastRound();
+    var downloadDataButton: HTMLElement = document.getElementById("download-data-button");
+    downloadDataButton.onclick = downloadData;
 };
 
 function getLastRound(): AmqResult {
@@ -169,4 +171,14 @@ function handleAnilistResult(anilistResult: AnilistApiResult) {
     animeScoreDiv.textContent = `${media.averageScore.toString()}/100`;
     animeMembersDiv.textContent = media.popularity.toString();
     animeEpisodesDiv.textContent = media.episodes.toString();
+}
+
+function downloadData() {
+    chrome.storage.local.get(null, function (items) {
+        var blob = new Blob([JSON.stringify(items)], { type: "application/json" });
+        var url = URL.createObjectURL(blob);
+        chrome.downloads.download({
+            url: url
+        });
+    }); `s`
 }
