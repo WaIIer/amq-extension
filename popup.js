@@ -8,8 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    var _ = { label: 0, sent: function () { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
@@ -111,27 +111,27 @@ function getInfoFromAnilist(animeName) {
     };
     fetch(url, options)
         .then(function (response) {
-        return __awaiter(this, void 0, void 0, function () {
-            var json;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        anilistResponse = response;
-                        return [4 /*yield*/, response.json()];
-                    case 1:
-                        json = _a.sent();
-                        return [2 /*return*/, response.ok ? json : new Error(String(response.status))];
-                }
+            return __awaiter(this, void 0, void 0, function () {
+                var json;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            anilistResponse = response;
+                            return [4 /*yield*/, response.json()];
+                        case 1:
+                            json = _a.sent();
+                            return [2 /*return*/, response.ok ? json : new Error(String(response.status))];
+                    }
+                });
             });
+        }).then(function (result) {
+            anilistResult = result;
+            handleAnilistResult(result);
+        })["catch"](function (error) {
+            anilistResponse = error;
+            console.log("Error from Anilist");
+            console.log(error.Error);
         });
-    }).then(function (result) {
-        anilistResult = result;
-        handleAnilistResult(result);
-    })["catch"](function (error) {
-        anilistResponse = error;
-        console.log("Error from Anilist");
-        console.log(error.Error);
-    });
 }
 function handleAnilistResult(anilistResult) {
     var animeYearDiv = document.getElementById("anime-year-div");
@@ -146,6 +146,7 @@ function handleAnilistResult(anilistResult) {
 }
 function downloadData() {
     chrome.storage.local.get(null, function (items) {
+
         var blob = new Blob([JSON.stringify(items)], { type: "application/json" });
         var url = URL.createObjectURL(blob);
         chrome.downloads.download({

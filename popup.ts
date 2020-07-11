@@ -180,5 +180,5 @@ function downloadData() {
         chrome.downloads.download({
             url: url
         });
-    }); `s`
+    });
 }

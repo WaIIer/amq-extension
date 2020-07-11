@@ -3,7 +3,7 @@ function getSelfName() {
     if (selfUserDivs.length < 1) {
         return "";
     }
-    return selfUserDivs[0].innerText;
+    return selfUserDivs[0].innerHTML;
 }
 
 function getPlayerName(qpAvatarContainer) {
@@ -64,9 +64,16 @@ function updateStorage(amqRound) {
     let songKey = amqRound.title + amqRound.artist;
     let pushedData = {};
 
-    chrome.storage.local.get(songKey, function (result) {
-        if (result[songKey]) {
-            pushedData = result[songKey];
+    chrome.storage.local.get("allTime", function (result) {
+
+        if (!result || !("allTime" in result)) {
+            result["allTime"] = {};
+        }
+
+        var songDict = result["allTime"];
+
+        if (songDict[songKey]) {
+            pushedData = songDict[songKey];
             pushedData.timesAsked += 1;
         } else {
             pushedData = {
@@ -86,7 +93,9 @@ function updateStorage(amqRound) {
             pushedData.wrongGuesses.push(amqRound.guess);
         }
 
-        chrome.storage.local.set({ [songKey]: pushedData }, function () {
+        songDict[songKey] = pushedData;
+
+        chrome.storage.local.set({ "allTime": songDict }, function () {
         });
 
         chrome.storage.local.set({ "lastRound": pushedData }, function () {
