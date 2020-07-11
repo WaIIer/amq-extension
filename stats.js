@@ -86,8 +86,6 @@ function updateStorage(amqRound) {
             pushedData.wrongGuesses.push(amqRound.guess);
         }
 
-        pushedData[amqRound.answer] = amqRound.songType;
-
         chrome.storage.local.set({ [songKey]: pushedData }, function () {
         });
 
