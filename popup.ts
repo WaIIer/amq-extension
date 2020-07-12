@@ -174,8 +174,18 @@ function handleAnilistResult(anilistResult: AnilistApiResult) {
 }
 
 function downloadData() {
-    chrome.storage.local.get(null, function (items) {
-        var blob = new Blob([JSON.stringify(items)], { type: "application/json" });
+    chrome.storage.local.get(null, function (items: JSON) {
+        var allTimeStats: JSON = items["allTime"];
+        var allTimeList: JSON[] = [];
+
+        for (var key in allTimeStats) {
+            allTimeList.push(allTimeStats[key]);
+        }
+
+        var downloadJson = {
+            "allTime": allTimeList
+        };
+        var blob = new Blob([JSON.stringify(downloadJson)], { type: "application/json" });
         var url = URL.createObjectURL(blob);
         chrome.downloads.download({
             url: url
