@@ -1,0 +1,10 @@
+body {
+    background-color: #fcd8fc;
+    height: 100%;
+}   
+
+.card {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3rem;
+}
