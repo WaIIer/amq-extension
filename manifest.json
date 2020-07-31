@@ -12,6 +12,14 @@
                 "stats.js",
                 "popup.js"
             ]
+        },
+        {
+            "matches": [
+                "http://127.0.0.1:8081/"
+            ],
+            "js": [
+                "messagepassing.js"
+            ]
         }
     ],
     "background": {
@@ -25,6 +33,8 @@
         "storage",
         "tabs",
         "*://*.animemusicquiz.com/*",
+        "http://127.0.0.1:8081/",
+        "http://*/*",
         "downloads"
     ]
 }

@@ -48,7 +48,9 @@ var lr: AmqResult = undefined;
 window.onload = () => {
     getLastRound();
     var downloadDataButton: HTMLElement = document.getElementById("download-data-button");
+    var copyDataButton: HTMLElement = document.getElementById("copy-data-button");
     downloadDataButton.onclick = downloadData;
+    copyDataButton.onclick = copyData;
 };
 
 function getLastRound(): AmqResult {
@@ -173,7 +175,8 @@ function handleAnilistResult(anilistResult: AnilistApiResult) {
     animeEpisodesDiv.textContent = media.episodes.toString();
 }
 
-function downloadData() {
+
+function getData(onDownload: (arg0: string) => void): void {
     chrome.storage.local.get(null, function (items: JSON) {
         var allTimeStats: JSON = items["allTime"];
         var allTimeList: JSON[] = [];
@@ -185,10 +188,43 @@ function downloadData() {
         var downloadJson = {
             "allTime": allTimeList
         };
-        var blob = new Blob([JSON.stringify(downloadJson)], { type: "application/json" });
+        var jsonString = JSON.stringify(downloadJson).toString();
+        onDownload(jsonString);
+    });
+}
+
+function downloadData() {
+    // chrome.storage.local.get(null, function (items: JSON) {
+    //     var allTimeStats: JSON = items["allTime"];
+    //     var allTimeList: JSON[] = [];
+
+    //     for (var key in allTimeStats) {
+    //         allTimeList.push(allTimeStats[key]);
+    //     }
+
+    //     var downloadJson = {
+    //         "allTime": allTimeList
+    //     };
+    //     var blob = new Blob([JSON.stringify(downloadJson)], { type: "application/json" });
+    //     var url = URL.createObjectURL(blob);
+    //     chrome.downloads.download({
+    //         url: url
+    //     });
+    // });
+    getData(function (jsonString) {
+        var blob = new Blob([jsonString], { type: "application/json" });
         var url = URL.createObjectURL(blob);
         chrome.downloads.download({
             url: url
+        })
+    });
+}
+
+function copyData() {
+    getData(function (jsonString) {
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+            console.log(tabs[0].id);
+            chrome.tabs.sendMessage(tabs[0].id, jsonString);
         });
     });
 }
