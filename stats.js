@@ -7,15 +7,12 @@ function getSelfName() {
 }
 
 function getPlayerName(qpAvatarContainer) {
-    let qpAvatarNameContainers = qpAvatarContainer.getElementsByClassName("qpAvatarNameContainer");
-    if (!qpAvatarNameContainers || qpAvatarNameContainers.length < 1) {
+    let qpAvatarNames = qpAvatarContainer.getElementsByClassName("qpAvatarName");
+    if (!qpAvatarNames || qpAvatarNames.length < 1) {
         return "";
     }
-    let qpAvatarNameContainerChildren = qpAvatarNameContainers[0].children;
-    if (!qpAvatarNameContainerChildren || qpAvatarNameContainerChildren.length < 1) {
-        return "";
-    }
-    return qpAvatarNameContainerChildren[0].textContent;
+
+    return qpAvatarNames[0].textContent;
 }
 
 function getGuess(qpAvatarContainer) {
@@ -40,21 +37,34 @@ function getResult(qpAvatarContainer) {
             guess: "..."
         };
     }
-    let result = qpAvatarAnswerContainers[0].className.includes("wrong");
+
+    if (qpAvatarAnswerContainers[0].className.includes("rightAnswer")) {
+        return {
+            valid: true,
+            result: "CORRECT",
+            guess: getGuess(qpAvatarContainer)
+        };
+    } else if (qpAvatarAnswerContainers.className.includes("wrongAnswer")) {
+        return {
+            valid: true,
+            result: "WRONG",
+            guess: getGuess(qpAvatarContainer)
+        };
+    }
+
     return {
-        result: (result ? "WRONG" : "CORRECT"),
-        guess: getGuess(qpAvatarContainer)
+        valid: false
     };
 }
 
 function getSelfAvatarContainer() {
-    let answerContainers = document.getElementsByClassName("qpAvatarContainer");
+    let avatarContainers = document.getElementsByClassName("qpAvatarContainer");
     let selfName = getSelfName();
 
-    for (let i = 0; i < answerContainers.length; i += 1) {
-        let playerName = getPlayerName(answerContainers[i]);
+    for (let i = 0; i < avatarContainers.length; i += 1) {
+        let playerName = getPlayerName(avatarContainers[i]);
         if (playerName == selfName) {
-            return answerContainers[i];
+            return avatarContainers[i];
         }
     }
     return undefined;
@@ -133,15 +143,13 @@ function updateCurrentSession(songKey, isCorrect) {
 }
 
 try {
-    let selfName = getSelfName();
     let songNameDiv = document.getElementById("qpSongName");
     let artistDiv = document.getElementById("qpSongArtist");
-    let answerContainer = document.getElementsByClassName("qpAvatarAnswerContainer")[0];
     let animeDiv = document.getElementById("qpAnimeName");
     let songTypeDiv = document.getElementById("qpSongType");
     let lastSongName = "";
 
-    function onSongNameChange(mutations) {
+    function onSongNameChange(_) {
         let songNameInnerHTML = songNameDiv.innerHTML;
         let lastSongArtist = artistDiv.innerHTML;
 
@@ -149,6 +157,11 @@ try {
             lastSongName = songNameInnerHTML;
 
             let result = getResult(getSelfAvatarContainer());
+
+            if (!result.valid) {
+                return;
+            }
+
             let amqRound = {
                 answer: animeDiv.innerText,
                 title: lastSongName,
