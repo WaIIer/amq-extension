@@ -1,6 +1,6 @@
 {
     "name": "AMQ Stats",
-    "version": "1.0",
+    "version": "1.1",
     "description": "Tracks stats to say you are bad at AMQ",
     "manifest_version": 2,
     "content_scripts": [
@@ -15,7 +15,8 @@
         },
         {
             "matches": [
-                "http://127.0.0.1:8081/"
+                "http://127.0.0.1:8080/",
+                "http://localhost:8080/"
             ],
             "js": [
                 "messagepassing.js"
