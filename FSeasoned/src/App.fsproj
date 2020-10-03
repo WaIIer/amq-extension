@@ -3,6 +3,9 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Models/Message/HomeMessage.fs" />
+    <Compile Include="Models/HomeModel.fs" />
+    <Compile Include="Models/Anilist.fs" />
     <Compile Include="Models/AllTimeStats.fs" />
     <Compile Include="App.fs" />
   </ItemGroup>
@@ -14,8 +17,8 @@
     <PackageReference Include="Fable.Core" Version="3.1.5" />
     <PackageReference Include="Fable.Elmish.React" Version="3.0.1" />
     <PackageReference Include="Fable.React" Version="6.2.0" />
-    <PackageReference Include="Fable.simplejson" Version="3.10.0" />
-    <PackageReference Include="fsharp.data" Version="3.3.3" />
+    <PackageReference Include="Fable.SimpleHttp" Version="3.0.0" />
+    <PackageReference Include="Fable.simplejson" Version="3.11.0" />
     <PackageReference Include="Fable.Browser.Geolocation" Version="1.0.0" />
     <PackageReference Include="Fable.Browser.Worker" Version="1.0.0" />
     <PackageReference Include="Fable.Browser.Navigator" Version="1.0.0" />

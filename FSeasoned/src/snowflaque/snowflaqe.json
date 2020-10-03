@@ -1,0 +1,7 @@
+{
+    "schema": "https://graphql.anilist.co",
+    "queries": ".",
+    "project": "AnilistSnowflaqe",
+    "output": "../Models/snowflaqe/AnilistModel",
+    "target": "fable"
+}

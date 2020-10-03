@@ -1,15 +1,30 @@
 module App.Models.AllTimeStats
 
-type AllTimeStats = { allTime: SongStats array }
+open App.Models.HomeModel
 
-and SongStats =
-    { animeTitle: string
-      songArtist: string
-      songTitle: string
-      songType: string
-      timesCorrect: int32
-      timesWrong: int32
-      wrongGuesses: string array }
+open Fable.SimpleJson
 
-let emptyAllTimeStats =
-    { allTime = [] |> Seq.cast<SongStats> |> Seq.toArray }
+let jsonToAllTimeStats jsonString =
+    jsonString
+    |> SimpleJson.parse
+    |> SimpleJson.mapKeys (function
+        | "allTime" -> "AllTime"
+        | "animeTitle" -> "AnimeTitle"
+        | "songTitle" -> "SongTitle"
+        | "songArtist" -> "SongArtist"
+        | "timesCorrect" -> "TimesCorrect"
+        | "timesWrong" -> "TimesWrong"
+        | "wrongGuesses" -> "WrongGuesses"
+        | key -> key)
+    |> Json.convertFromJsonAs<AllTimeStats>
+
+
+let emptySongStats: SongStats =
+    { AnimeTitle = ""
+      SongTitle = ""
+      SongArtist = ""
+      TimesCorrect = 0
+      TimesWrong = 0
+      WrongGuesses = [||] }
+
+let emptyAllTimeStats: AllTimeStats = { AllTime = [||] }
