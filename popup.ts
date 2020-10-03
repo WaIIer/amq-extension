@@ -100,7 +100,8 @@ function getLastRound(): AmqResult {
 }
 
 var animeExceptions = {
-    "TIGER X DRAGON": "TORADORA"
+    "TIGER X DRAGON": "TORADORA",
+    ""
 }
 
 var anilistQuery = `
