@@ -148,7 +148,7 @@ let onAnilistUsernameInputChange model value =
           EnableAnilistIntegration = value.Length > 0 }
 
 let update message model =
-    // printfn "%s" (message.ToString())
+    printfn "%s" (message.ToString())
 
     match message with
     | ExtensionEvent dataFromExtension -> processDataFromExtension dataFromExtension model
@@ -163,6 +163,7 @@ let update message model =
 
 let view model dispatch =
     if not model.Init then
+        printfn "Added listener"
         window.addEventListener
             ("extensionButtonPressEvent",
              function

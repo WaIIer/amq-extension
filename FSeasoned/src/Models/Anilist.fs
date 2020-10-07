@@ -117,6 +117,7 @@ let getResponseFromAnilist username dispatch =
             |> Http.send
 
         printfn "%s" response.responseText
+
         match response.statusCode with
         | 200 ->
             (AnilistResponse response.responseText)

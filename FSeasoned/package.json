@@ -1,7 +1,11 @@
 {
+  "homepage": "http://bwall72.github.io/amq-extension",
+  "name": "fseasoned",
   "private": true,
   "scripts": {
-      "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "build": "webpack",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "@babel/core": "^7.8.4",
