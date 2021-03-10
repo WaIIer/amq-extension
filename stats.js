@@ -38,13 +38,23 @@ function getResult(qpAvatarContainer) {
         };
     }
 
-    if (qpAvatarAnswerContainers[0].className.includes("rightAnswer")) {
+    let qpAvatarAnswerText = qpAvatarAnswerContainers[0].getElementsByClassName("qpAvatarAnswerText");
+
+    if (!qpAvatarAnswerText || qpAvatarAnswerText.length < 0)
+    {
+        return {
+            result: "not found",
+            guess: "..."
+        };
+    }
+
+    if (qpAvatarAnswerText[0].className.includes("rightAnswer")) {
         return {
             valid: true,
             result: "CORRECT",
             guess: getGuess(qpAvatarContainer)
         };
-    } else if (qpAvatarAnswerContainers.className.includes("wrongAnswer")) {
+    } else if (qpAvatarAnswerText.className.includes("wrongAnswer")) {
         return {
             valid: true,
             result: "WRONG",
