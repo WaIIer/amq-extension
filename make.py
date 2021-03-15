@@ -4,30 +4,32 @@ import shutil
 base = os.path.dirname(os.path.abspath(__file__))
 extension_dir = os.path.join(base, "AmqExtension")
 amq_extension_files = [
-        "amqstats.js",
-        "anilist_32x32.png",
-        "background.js",
-        "background.png",
-        "bootstrap.min.css",
-        "bootstrap.min.js",
-        "jquery.js",
-        "manifest.json",
-        "messagepassing.js",
-        "package.json",
-        "page.html",
-        "popup.css",
-        "popup.html",
-        "popup.js",
-        "stats.js"
-    ]
+    "amqstats.js",
+    "anilist_32x32.png",
+    "background.js",
+    "background.png",
+    "bootstrap.min.css",
+    "bootstrap.min.js",
+    "jquery.js",
+    "manifest.json",
+    "messagepassing.js",
+    "page.html",
+    "popup.css",
+    "popup.html",
+    "popup.js",
+    "stats.js"
+]
+
 
 def clean_extension_dir():
     if os.path.exists(extension_dir):
         shutil.rmtree(extension_dir)
 
+
 def clean_zip():
     if os.path.exists(f"{extension_dir}.zip"):
         os.remove(f"{extension_dir}.zip")
+
 
 def create_populate_extension_dir():
     os.mkdir(extension_dir)
