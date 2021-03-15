@@ -88,7 +88,7 @@ function getLastRound() {
 var animeExceptions = {
     "TIGER X DRAGON": "TORADORA"
 };
-var anilistQuery = "\nquery ($animeName: String) {\n    Media (search: $animeName, type: ANIME) {\n        title {\n            romaji\n            english\n            native\n            userPreferred\n        }\n        season\n        seasonYear\n        averageScore\n        genres\n        popularity\n        episodes\n    }\n}\n";
+var anilistQuery = "\nquery ($animeName: String) {\n    Media (search: $animeName, type: ANIME) {\n        title {\n            romaji\n            english\n            native\n            userPreferred\n        }\n        season\n        seasonYear\n        averageScore\n        genres\n        popularity\n        episodes\n        description(asHtml: true)\n        coverImage {\n          medium\n        }\n    }\n}\n";
 var anilistResponse = null;
 var anilistResult = null;
 function getInfoFromAnilist(animeName) {
@@ -136,15 +136,23 @@ function getInfoFromAnilist(animeName) {
     });
 }
 function handleAnilistResult(anilistResult) {
+    var animeCoverImageDiv = document.getElementById("anime-cover-image");
     var animeYearDiv = document.getElementById("anime-year-div");
     var animeScoreDiv = document.getElementById("anime-score-div");
     var animeMembersDiv = document.getElementById("anime-members-div");
     var animeEpisodesDiv = document.getElementById("anime-episodes-div");
+    var animeDescriptionDiv = document.getElementById("anime-description");
     var media = anilistResult.data.Media;
+    var animeCoverImageImg = new Image(100, 140);
+    animeCoverImageImg.src = media.coverImage.medium;
+    animeCoverImageDiv.appendChild(animeCoverImageImg);
     animeYearDiv.textContent = media.season.toString() + " " + media.seasonYear.toString();
     animeScoreDiv.textContent = media.averageScore.toString() + "/100";
     animeMembersDiv.textContent = media.popularity.toString();
     animeEpisodesDiv.textContent = media.episodes.toString();
+    var descriptionBlock = document.createElement('div');
+    descriptionBlock.innerHTML = media.description;
+    animeDescriptionDiv.appendChild(descriptionBlock);
 }
 function getData(onDownload) {
     chrome.storage.local.get(null, function (items) {

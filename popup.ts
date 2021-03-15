@@ -22,6 +22,12 @@ interface Media {
     genres?: (string)[] | null;
     popularity: number;
     episodes: number;
+    description: string;
+    coverImage: CoverImage;
+}
+
+interface CoverImage {
+    medium: string;
 }
 interface Title {
     romaji: string;
@@ -101,8 +107,7 @@ function getLastRound(): AmqResult {
 
 var animeExceptions = {
     "TIGER X DRAGON": "TORADORA",
-    ""
-}
+};
 
 var anilistQuery = `
 query ($animeName: String) {
@@ -119,6 +124,10 @@ query ($animeName: String) {
         genres
         popularity
         episodes
+        description(asHtml: true)
+        coverImage {
+          medium
+        }
     }
 }
 `;
@@ -165,15 +174,25 @@ function getInfoFromAnilist(animeName: string) {
 }
 
 function handleAnilistResult(anilistResult: AnilistApiResult) {
+    var animeCoverImageDiv: HTMLElement = document.getElementById("anime-cover-image");
     var animeYearDiv: HTMLElement = document.getElementById("anime-year-div");
     var animeScoreDiv: HTMLElement = document.getElementById("anime-score-div");
     var animeMembersDiv: HTMLElement = document.getElementById("anime-members-div");
     var animeEpisodesDiv: HTMLElement = document.getElementById("anime-episodes-div");
+    var animeDescriptionDiv: HTMLElement = document.getElementById("anime-description");
     var media = anilistResult.data.Media;
+    var animeCoverImageImg = new Image(100, 140);
+    animeCoverImageImg.src = media.coverImage.medium;
+
+    animeCoverImageDiv.appendChild(animeCoverImageImg);
     animeYearDiv.textContent = `${media.season.toString()} ${media.seasonYear.toString()}`;
     animeScoreDiv.textContent = `${media.averageScore.toString()}/100`;
     animeMembersDiv.textContent = media.popularity.toString();
     animeEpisodesDiv.textContent = media.episodes.toString();
+
+    var descriptionBlock = document.createElement('div')
+    descriptionBlock.innerHTML = media.description;
+    animeDescriptionDiv.appendChild(descriptionBlock);
 }
 
 
