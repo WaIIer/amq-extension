@@ -54,7 +54,7 @@ function getResult(qpAvatarContainer) {
             result: "CORRECT",
             guess: getGuess(qpAvatarContainer)
         };
-    } else if (qpAvatarAnswerText.className.includes("wrongAnswer")) {
+    } else if (qpAvatarAnswerText[0].className.includes("wrongAnswer")) {
         return {
             valid: true,
             result: "WRONG",
