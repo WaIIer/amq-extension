@@ -86,9 +86,10 @@ function getLastRound() {
     return lr;
 }
 var animeExceptions = {
-    "TIGER X DRAGON": "TORADORA"
+    "TIGER X DRAGON": "TORADORA",
+    "Because I Don't Like My Big Brother At All-!!": "Onii-chan no Koto nanka Zenzen Suki Janain Dakara ne!!"
 };
-var anilistQuery = "\nquery ($animeName: String) {\n    Media (search: $animeName, type: ANIME) {\n        title {\n            romaji\n            english\n            native\n            userPreferred\n        }\n        season\n        seasonYear\n        averageScore\n        genres\n        popularity\n        episodes\n        description(asHtml: true)\n        coverImage {\n          medium\n        }\n    }\n}\n";
+var anilistQuery = "\nquery ($animeName: String) {\n    Media (search: $animeName, type: ANIME) {\n        title {\n            romaji\n            english\n            native\n            userPreferred\n        }\n        season\n        seasonYear\n        averageScore\n        genres\n        popularity\n        episodes\n        description(asHtml: true)\n        coverImage {\n          medium\n        }\n        siteUrl\n    }\n}\n";
 var anilistResponse = null;
 var anilistResult = null;
 function getInfoFromAnilist(animeName) {
@@ -143,9 +144,15 @@ function handleAnilistResult(anilistResult) {
     var animeEpisodesDiv = document.getElementById("anime-episodes-div");
     var animeDescriptionDiv = document.getElementById("anime-description");
     var media = anilistResult.data.Media;
+    var anilistLink = document.createElement("a");
+    // anilistLink.setAttribute("style", "display:inline-block;");
+    anilistLink.setAttribute("target", "_blank");
     var animeCoverImageImg = new Image(100, 140);
+    // animeCoverImageImg.setAttribute("style", "display:block");
+    anilistLink.href = media.siteUrl;
     animeCoverImageImg.src = media.coverImage.medium;
-    animeCoverImageDiv.appendChild(animeCoverImageImg);
+    anilistLink.appendChild(animeCoverImageImg);
+    animeCoverImageDiv.appendChild(anilistLink);
     animeYearDiv.textContent = media.season.toString() + " " + media.seasonYear.toString();
     animeScoreDiv.textContent = media.averageScore.toString() + "/100";
     animeMembersDiv.textContent = media.popularity.toString();

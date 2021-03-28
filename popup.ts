@@ -24,6 +24,7 @@ interface Media {
     episodes: number;
     description: string;
     coverImage: CoverImage;
+    siteUrl: string;
 }
 
 interface CoverImage {
@@ -107,6 +108,7 @@ function getLastRound(): AmqResult {
 
 var animeExceptions = {
     "TIGER X DRAGON": "TORADORA",
+    "Because I Don't Like My Big Brother At All-!!": "Onii-chan no Koto nanka Zenzen Suki Janain Dakara ne!!"
 };
 
 var anilistQuery = `
@@ -128,6 +130,7 @@ query ($animeName: String) {
         coverImage {
           medium
         }
+        siteUrl
     }
 }
 `;
@@ -181,10 +184,17 @@ function handleAnilistResult(anilistResult: AnilistApiResult) {
     var animeEpisodesDiv: HTMLElement = document.getElementById("anime-episodes-div");
     var animeDescriptionDiv: HTMLElement = document.getElementById("anime-description");
     var media = anilistResult.data.Media;
-    var animeCoverImageImg = new Image(100, 140);
-    animeCoverImageImg.src = media.coverImage.medium;
 
-    animeCoverImageDiv.appendChild(animeCoverImageImg);
+    var anilistLink: HTMLAnchorElement = document.createElement("a");
+    // anilistLink.setAttribute("style", "display:inline-block;");
+    anilistLink.setAttribute("target", "_blank");
+    var animeCoverImageImg = new Image(100, 140);
+    // animeCoverImageImg.setAttribute("style", "display:block");
+    anilistLink.href = media.siteUrl;
+    animeCoverImageImg.src = media.coverImage.medium;
+    anilistLink.appendChild(animeCoverImageImg);
+    animeCoverImageDiv.appendChild(anilistLink);
+
     animeYearDiv.textContent = `${media.season.toString()} ${media.seasonYear.toString()}`;
     animeScoreDiv.textContent = `${media.averageScore.toString()}/100`;
     animeMembersDiv.textContent = media.popularity.toString();
